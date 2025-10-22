@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from backend.crawler import crawl_befood_restaurants, crawl_restaurant_detail
+from crawler import crawl_befood_restaurants, crawl_restaurant_detail
 import uvicorn
 
 app = FastAPI()

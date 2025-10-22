@@ -46,7 +46,8 @@ export default function RestaurantList() {
   useEffect(() => {
     async function fetchRestaurants() {
       try {
-        const response = await fetch(`http://127.0.0.1:5001/api/restaurants?page=${page}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const response = await fetch(`${apiUrl}/api/restaurants?page=${page}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

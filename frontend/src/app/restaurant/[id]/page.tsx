@@ -37,7 +37,8 @@ export default function RestaurantDetailPage() {
     if (id) {
       async function fetchRestaurantDetail() {
         try {
-          const response = await fetch(`http://127.0.0.1:5001/api/restaurants/${id}`);
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+          const response = await fetch(`${apiUrl}/api/restaurants/${id}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

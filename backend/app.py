@@ -15,23 +15,23 @@ app.add_middleware(
 )
 
 @app.get("/api/restaurants")
-def get_restaurants(page: int = Query(1, ge=1)):
+async def get_restaurants(page: int = Query(1, ge=1)):
     """
-    API endpoint to get restaurant data with pagination.
+    API endpoint to get restaurant data with pagination asynchronously.
     """
     limit = 12  # Each page will have 12 items
-    data = crawl_befood_restaurants(page=page, limit=limit)
+    data = await crawl_befood_restaurants(page=page, limit=limit)
     if data:
         return data
     else:
         return {"error": "Failed to fetch data"}
 
 @app.get("/api/restaurants/{restaurant_id}")
-def get_restaurant_detail(restaurant_id: int):
+async def get_restaurant_detail(restaurant_id: int):
     """
-    API endpoint to get detail data for a specific restaurant.
+    API endpoint to get detail data for a specific restaurant asynchronously.
     """
-    data = crawl_restaurant_detail(restaurant_id)
+    data = await crawl_restaurant_detail(restaurant_id)
     if data:
         return data
     else:

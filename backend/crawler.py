@@ -1,9 +1,10 @@
-import requests
+import httpx
 import json
+import asyncio
 
-def crawl_befood_restaurants(page=1, limit=12):
+async def crawl_befood_restaurants(page=1, limit=12):
     """
-    Fetches restaurant data from the befood API with pagination.
+    Fetches restaurant data from the befood API with pagination asynchronously.
     """
     url = 'https://gw.be.com.vn/api/v1/be-marketplace/web/collection/items/restaurants'
     
@@ -59,16 +60,17 @@ def crawl_befood_restaurants(page=1, limit=12):
     }
 
     try:
-        response = requests.post(url, headers=headers, data=json.dumps(data))
-        response.raise_for_status()  # Raise an exception for bad status codes
-        return response.json()
-    except requests.exceptions.RequestException as e:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, headers=headers, data=json.dumps(data))
+            response.raise_for_status()  # Raise an exception for bad status codes
+            return response.json()
+    except httpx.RequestError as e:
         print(f"An error occurred: {e}")
         return None
 
-def crawl_restaurant_detail(restaurant_id: int):
+async def crawl_restaurant_detail(restaurant_id: int):
     """
-    Fetches detail data for a specific restaurant from the befood API.
+    Fetches detail data for a specific restaurant from the befood API asynchronously.
     """
     url = 'https://gw.be.com.vn/api/v1/be-marketplace/web/restaurant/detail'
     
@@ -115,20 +117,24 @@ def crawl_restaurant_detail(restaurant_id: int):
     }
 
     try:
-        response = requests.post(url, headers=headers, data=json.dumps(data))
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, headers=headers, data=json.dumps(data))
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as e:
         print(f"An error occurred: {e}")
         return None
 
-if __name__ == "__main__":
+async def main():
     # Test restaurant list crawl
-    # restaurant_data = crawl_befood_restaurants(page=1, limit=12)
+    # restaurant_data = await crawl_befood_restaurants(page=1, limit=12)
     # if restaurant_data:
     #     print(json.dumps(restaurant_data, indent=2, ensure_ascii=False))
 
     # Test restaurant detail crawl
-    detail_data = crawl_restaurant_detail(3080)
+    detail_data = await crawl_restaurant_detail(3080)
     if detail_data:
         print(json.dumps(detail_data, indent=2, ensure_ascii=False))
+
+if __name__ == "__main__":
+    asyncio.run(main())

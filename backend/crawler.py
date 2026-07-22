@@ -1,7 +1,9 @@
 import httpx
 import json
 import asyncio
+import os
 
+TOKEN_AUTHEN = os.getenv("TOKEN_AUTHEN", default='xxxxx')
 
 async def crawl_befood_restaurants(page=1, limit=12):
     """
@@ -13,7 +15,7 @@ async def crawl_befood_restaurants(page=1, limit=12):
         'accept': '*/*',
         'accept-language': 'vi,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6',
         'app_version': '11310',
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjowLCJhdWQiOiJndWVzdCIsImV4cCI6MTc4NDQ1NTA5OSwiaWF0IjoxNzg0MzY4Njk5LCJpc3MiOiJiZS1kZWxpdmVyeS1nYXRld2F5In0.cQ_Q9rKG8NvLp1JsSL9Ote9nl6JO4orVNxJ8X1dS_aM',
+        'authorization': 'Bearer ' + TOKEN_AUTHEN,
         'cache-control': 'no-cache',
         'content-type': 'application/json',
         'origin': 'https://food.be.com.vn',
@@ -79,7 +81,7 @@ async def crawl_restaurant_detail(restaurant_id: int):
         'accept': '*/*',
         'accept-language': 'vi,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6',
         'app_version': '11310',
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjowLCJhdWQiOiJndWVzdCIsImV4cCI6MTc4NDQ1NTA5OSwiaWF0IjoxNzg0MzY4Njk5LCJpc3MiOiJiZS1kZWxpdmVyeS1nYXRld2F5In0.cQ_Q9rKG8NvLp1JsSL9Ote9nl6JO4orVNxJ8X1dS_aM',
+        'authorization': 'Bearer ' + TOKEN_AUTHEN,
         'cache-control': 'no-cache',
         'content-type': 'application/json',
         'origin': 'https://food.be.com.vn',
